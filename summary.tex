@@ -1,0 +1,1121 @@
+\documentclass{llncs}
+
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pstricks}
+%\usepackage[dvips]{pstricks}
+%\usepackage{proof}
+
+\date{}
+\date{Version of \today}
+
+% \newenvironment{lined}[1]%
+%   {\begin{center}\begin{minipage}{#1}\hrule\medskip}
+%   {\vspace{-1ex}\hrule \end{minipage}\end{center}}
+% %% end of [newenvironment]
+% 
+% \def\lshfit#1#2{\kern-#1 #2\kern#1}
+% \def\casebox{\psframebox[shadow=true,shadowsize=2pt,shadowangle=315]}
+% \def\fillsquare{\kern2pt\raise0.25pt
+%   \hbox{$\vcenter{\hrule height0pt \hbox{\vrule width5pt height5pt} \hrule height0pt}$}
+% } %% end of [\def]
+% 
+% \def\ATS{{\cal A\kern-1ptT\kern-2ptS}}
+
+\newcommand{\csppre}[2]{#1 \rightarrow #2}
+\newcommand{\cspint}[2]{#1\ \sqcap\ #2}
+\newcommand{\cspext}[2]{#1\ \Box\ #2}
+\newcommand{\cspseq}[2]{#1; #2}
+% \newcommand{\csppara}[3]{#1\ |_{#2}|\ #3}
+\newcommand{\csppara}[3]{#1 \underset{#2}{\parallel} #3}
+\newcommand{\csphide}[2]{#1\ \backslash\ #2}
+\newcommand{\csptick}{\surd}
+\newcommand{\csptau}{\tau}
+\newcommand{\csptracesmodel}{\mathcal{T}}
+\newcommand{\cspfdrmodel}{\mathcal{N}}
+\newcommand{\cspfailuresmodel}{\mathcal{F}}
+\newcommand{\cspm}{CSP$_M$}
+\newcommand{\cspbold}{\textbf{CSP}}
+\newcommand{\csp}{CSP}
+\newcommand{\csps}{CSP\#}
+
+\newcommand{\dmllampat}{$\lambda_{pat}$}
+\newcommand{\dmlL}{$\mathcal{L}$}
+\newcommand{\dmllamall}{$\lambda_{pat}^{\Pi,\Sigma}$}
+\newcommand{\dmlzero}{$DML_0$}
+
+\newcommand{\fdr}{FDR}
+\newcommand{\pat}{PAT}
+\newcommand{\prob}{PRoB}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{plain}
+
+% make a proper TOC despite llncs
+\setcounter{tocdepth}{2}
+\makeatletter
+\renewcommand*\l@author[2]{}
+\renewcommand*\l@title[2]{}
+\makeatletter
+
+\begin{document}
+
+\title{%
+Summary of Various Topics in \break
+Type Sytem, Linear-Time Temporal Logic and Model Checking
+} %% end of [\title]
+\author{Zhiqiang Ren}
+\institute{Boston University}
+
+\maketitle % typeset the title of the contribution
+
+% \begin{abstract}
+% 
+% Content of abstract.
+% 
+% \end{abstract}
+
+% \keywords{type theory, dependent types, linear timed logic, model checking}
+
+%%
+\setcounter{page}{1}
+%%
+
+\tableofcontents 
+
+\baselineskip=11.875pt
+
+\newpage 
+\section{Summary of ``Dependent ML: An Approach to Practical
+Programming with Dependent Types''\cite{Xi2007Dependent}}
+  \label{section:DML}
+
+This paper presents an approach to applying dependent types in practical
+programming. Taking such approach, users write programs in a functional
+programming language (Dependent ML), which allows for specification and
+inference of more precise type information than other common programming
+languages. Such precise type information can then be used to facilitate
+program error detection and compiler optimization.
+
+In summary, the whole system involves four languages including \dmllampat, \dmlL,
+\dmllamall{} and \dmlzero. \dmlzero{} is the outmost part of the system, in which users
+write program. \dmllamall{} is an intermediate language with complex syntax,
+from which precise type information can be extracted. Language \dmlL{} is for
+building type index used by both \dmlzero{} and \dmllamall. Language
+\dmllampat{} serves as a bridge between \dmlzero{} and \dmllamall, representing the dynamic
+semantics of expressions in the later two languages. With the aforementioned
+settings, the paper gives out elaboration rules to map expression in
+\dmlzero{} into expression in \dmllamall{} which conveys more precise types, while
+maintaining the dynamic semantics. A detailed illustration of each of these
+four languages and their relations goes as follows.
+
+Firstly, \dmllampat{} is a simply typed language, which extends the
+simply typed $\lambda$-calculus with recursion and general pattern matching. The
+dynamic semantics of expression in \dmllampat{} is assigned through the use of
+evaluation context and redex. The proof of type soundness of \dmllampat{} is
+given to show the constraint on the result of the evaluation of a well-typed
+expression. A sensible \emph{operational equivalence} relation
+between two expressions in \dmllampat{} is given based on the concept of general
+context. Later a reflexive and transitive relation $\leq_{dyn}$ on expressions in
+\dmllampat{} is given which is equivalent to the \emph{operational equivalence} if the
+right-hand expression of the relation are well-typed. Another way to put it,
+two expressions in \dmllampat{} with relation $\leq_{dyn}$ are operational equivalent
+if the expression on the right-hand side of the $\leq_{dyn}$ relation is well-typed.
+
+Secondly, the generic type index language \dmlL{} introduced by the paper is a
+pure simply typed language, in which
+constraint relations can be properly defined. Types in \dmlL{} are called 
+sorts for clarity while expressions in \dmlL{} is called terms, 
+which are used to build types in \dmllamall.
+
+Thirdly, the explicitly typed language \dmllamall{} is an extension of
+\dmllampat{} with both universal and existential dependent types. Similar to
+that in \dmllampat{}, dynamic
+semantics of expression in \dmllamall{} is given based on 
+evaluation context and redex. Formal proof
+is provided for the type soundness of \dmllamall. The paper defines an
+eraser operation, which maps expressions and types in \dmllamall{} into the
+their counterparts in \dmllampat. It also illustrates the relation between
+the dynamic semantics of a well-typed expression in \dmllamall{} and the
+dynamic semantics of its erasure in \dmllampat, which makes it reasonable to
+view these two dynamic semantics as the same.
+
+Finally, the paper presents an external language \dmlzero{} together with a mapping
+from \dmlzero{} to the internal language language \dmllamall. The process of such
+mapping from an expression in \dmlzero{} to an expression in \dmllamall{} along with
+its type is called elaboration. Elaboration rules are given to illustrate this
+process. Erasure is defined to map an expression in \dmlzero{} into \dmllampat. The
+dynamic semantics of the later can be viewed as the dynamic semantics of the
+former. The paper proves that if an expression in \dmlzero{} can be elaborated into
+an expression in \dmllamall, then their erasures in \dmllampat{} are operational
+equivalent. Simply put, by the elaboration, we get an an expression with more
+precise type while maintaining the same dynamic semantics.  
+
+The design of the whole system introduced in the paper benefits both builders of
+programming language and programmers using the language in the following
+aspects.
+
+The form of dependent
+types studied in this paper is called a restricted form of dependent types,
+which is substantially different from the usual form of dependent types in
+Martin-L\"of's development of constructive type theory. One character of such
+restricted form of dependent types is that the type index language
+\dmlL{} used in such dependent type system doesn't contain any side
+effect (e.g. recursion), which makes it practical for
+programmers to reason about the types they want to use. Also it's practical
+to build the type checker which is able to compare types within such system.
+
+Though \dmllamall{} provides a way to exploit the dependent type system, 
+which can facilitate program error detection and
+compiler optimization, programmer may be quickly overwhelmed with the
+demanding work to write a well-typed expression in \dmllamall{} as well as the
+amount of effort for manual type annotation of the program. The introduction
+of \dmlzero{} offers a solution to such problem. In \dmlzero{} programmer can write the
+program with relatively simpler syntax and only need to provide a reasonably
+small amount of type annotation in practical programming. The compiler can
+then translate the program into \dmllamall{} while maintaining the dynamic
+semantics. The illustration of such translation process and the formal proof
+of the soundness of such translation constitute the main contribution of
+the paper.
+
+Going still further, the paper also extends \dmllamall{} with 
+parametric polymorphism, exception
+and references, attesting the adaptability and practicality of such approach
+to supporting the use of dependent types in the presence of realistic
+programming features.
+
+
+\newpage
+\section{Summary of ``Linear types can change the world!''\cite{Wadler1990Linear}}
+  \label{section:lineartypes}
+
+In traditional functional programming languages, objects can be created explicitly
+and discarded implicitly. And as such, the ``update'' of an object is conveyed by
+creating a new object and discarding the old. In such programming paradigm,
+objects of the same value are treated as of the same identity, 
+which doesn't actually match the computation model provided by real
+physical machines in which objects are distinguished by their innate identities.
+On one hand, such programming paradigm releases the programmers from the heavy duty of
+tracking all the objects within the computation system, which is mostly
+cumbersome and error-prone. On the other hand, it also deprives the
+programmers of the power to manipulate objects directly and the general
+mechanism for tracking ``real'' objects in the system (e.g. reference counting and garbage
+collection) often leads to an inefficient implementation.
+
+This paper presents a type system, in which types are divided into two families.
+Objects of linear type have exactly one reference to them, and so require no garbage
+collection. Objects of nonlinear type may have many pointers to them, or none, and
+do require garbage collection.  Such system not only offers the explicit 
+manipulation of objects with guaratantee of correctness but 
+also retains the same ability of implicit objects
+management as normal functional programming language. 
+
+Linear type system applied in the paper is based on the linear logic
+of J.-Y. Girard. The key idea in such system is that each assumption in the context of a
+type judgement must be used exactly once. It cannot be duplicated or discarded.
+Another way to put it, the typing rule of the system guarantees that a well
+typed program can have only one reference to any object of linear type
+and cannot discard such object implicitly.
+With such constraints, it's sensible in such linear system that
+each operation that allocates an object is paired with exactly one operation
+that deallocates that object. The allocation operations create objects to which
+a single reference exists. This reference may never be duplicated or discarded,
+so the deallocation operations act on objects to which they hold the sole
+reference. In particular, after an application the storage occupied by the function
+(closure) may be reclaimed, which leads to the fact that a linear function
+(closure) in such system can and must be applied only once.
+
+The non-linear part of the type system presented in the paper is similar to that
+of the simply-typed $\lambda$-calculus with the support of data type. 
+Complex types comprising of both linear and non-linear types can be constructed while
+the type system guarantees that non-linear data structure must not 
+contain any linear components. This is sensible that the non-linear object,
+which can be duplicated, can cause the linear object embedded inside to be
+accessed once for each duplication.
+
+Going still further, the system provides a
+special ``let'' construct in which multiple references to an object is
+allowed so long as the object is being ``read'' as indicated explicitly by the
+programmers. The type system and the evaluation rule guarantee that all
+those multiple references would be relinquished till only one left for the
+coming ``write'' access.
+
+Though the type system used in this paper is monomorphic, it is not difficult to
+extend it to a polymorphic language with explicit type applications.
+Besides, the language provided by the paper is in essence the traditional
+$\lambda$-calculus
+extended by pattern matching and data type declaration, which makes it a
+good candidate to be incorporated into existing languages with more
+advanced types.
+
+\newpage
+\section{Summary of ``Safe Programming with Pointers through Stateful Views''
+  \cite{Zhu2005Safe}}
+  \label{section:statefulviews}
+
+ATS is a programming language with a type system rooted in a framework
+\emph{Applied Type System}, which is derived from
+\emph{DML}\footnote{Please refer to section \ref{section:DML} for details.}.
+It supports a restricted form of dependent types, by which sophisticated
+structures can be encoded with more confidence of correctness.
+This paper illustrates another
+novel and desirable feature of it, the support for safe programming with
+pointers through a notion of \emph{stateful views}.
+
+The linear type system in section \ref{section:lineartypes} provides a solution
+to control the access to individual objects within the system. The paper takes
+advantage of intuitionistic linear logic from another perspective. Instead of
+introducing linear types for concrete objects in memory, it introduces linear
+``views'' for abstract ``proof'', which depicts not only the linearity of the 
+objects but also the locations of them.
+Such feature is made possible by the introduction of a special \emph{sort}
+\emph{addr} in the statics of ATS, which represents the address within the
+memory. Through dependent types, a view is dependent on multiple addresses
+within the memory, which in turn states the layout of the memory. Therefore,
+such method is more flexible than that in section \ref{section:lineartypes}.
+
+The type system of ATS is divided
+into two families: nonlinear types and views. From the perspective of
+isomorphism, a view corresponds to a logic proposition, its instance is an 
+abstract object corresponding to the proof of the proposition. Hence, we just
+call the instance of a \emph{view} a \emph{proof}. Such proofs are only used at
+compile-time for performing type-checking and they are neither needed nor
+available at run-time.
+
+Formally, two forms of constraints including $\Sigma; \overline{P} 
+\models P$ (persistent) and $\Sigma; \overline{P}; \overline{V} 
+\models V$ (ephemeral) are formalized in ATS, which are needed to
+define type equality. The rules for proving such constraints are given based on
+intuitionistic logic and intuitionistic linear logic. Besides, for each
+user-defined view constructor, a couple of constructor-related rules are
+introduced. With such rules as well as those rules related to type judgement and
+subtype relation, reasoning about the changes of the states of the memory is
+turned into a type checking issue.
+
+To sum up, the usage of \emph{stateful views} provides a light-weighted formal
+method for reasoning about pointers and memory. Though extra effort is
+needed to encode such reasoning explicitly in program, the manifist of such
+reasoning makes it practical to apply the method to general sophisticated programs where
+fully-automatic verification is infeasible.
+
+
+
+\newpage
+\section{Summary of ``Proofs and Types''
+  \cite{Girard1989Proofs}}
+  \label{section:proofstypes}
+
+\subsection{Normalization}
+A term in $\lambda$-calculus is called a normal form if it contains no redex. A
+normal form is the termination of the reduction path. Starting from a term,
+there are many reduction paths which may or may not lead to a normal form.
+Typed $\lambda$-calculus behaves well computationally in the sense that each
+term can be reduced to a unique normal form along any reduction path. Such property
+guarantees that the program written in typed $\lambda$-calculus shall terminate
+no matter which evaluation strategy is chosen.
+
+The proof of such property consists of two parts: the uniqueness and existence of 
+the normal form.
+
+The uniqueness comes from that $\beta$ reduction is \emph{Church-Rosser},
+which means that if $t \rightsquigarrow u, v$, then $\exists w. u, v
+\rightsquigarrow w$. Its proof can be found in chapter 3.2 of
+\cite{Barendregt1984Lambda}.
+
+The existence of the normal form can be interpreted in two ways. One way
+is that there exists a reduction path leading to the normal form. The other is
+that all the reduction paths lead to the normal form. The former property is
+called weak normalization, while the later is called strong normalization.
+
+The proof of weak normalization is kind of construction proof in the sense that
+it provides the algorithm for choosing at each step along the reduction path
+an appropriate redex which leads us to the normal form. Since the algorithm is
+defined recursively, an appropriate index has to be chosen to prove that the
+algorithm terminates, which in this case is the degree of redex. At each step,
+we locate in the term the redex with the maximal degree $n$ and we also require that
+the subterm of the redex we pick cannot contain redex of the same degree. It
+is then proved that after the reduction of the redex we pick, no new redex with
+degree $\ge n$ would be created and also the number of redex with degree $n$ is
+decreased by $1$. It's easy to reason that such algorithm would lead us to a
+term without redex (normal form).
+
+The proof theoretic technique for the strong normalization of simply typed 
+$\lambda$-calculus can be used to prove the strong normalization 
+of System T and System F, which
+include a type of integers and hence codes Peano Arithmetic. Therefore, we have
+to use a strong induction hypothesis, for which an abstract notion called
+\emph{reducibility} is introduced. For simply typed $\lambda$-calculus, a set
+$RED_T$ (``reducible terms for type T'') is defined by induction on the
+\emph{type} T.
+\begin{enumerate}
+\item For $t$ of atomic type $T$, $t$ is reducible if it is strongly
+normalisable.
+\item For $t$ of the type $U \rightarrow V$, $t$ is reducible if, for all
+reducible $u$ of type $U$, $t u$ is reducible of type $V$.
+\end{enumerate}
+
+The following three properties of reducibility are proved together by induction.
+\begin{enumerate}
+\item (CR 1) If $t \in$ RED$_T$, then $t$ is strongly normalisable.
+
+\item (CR 2, Forward Property) If $t \in$ RED$_T$, and $t \rightsquigarrow t'$, then $t' \in$
+RED$_T$.
+
+\item (CR 3, Backward Property) If $t$ is neutral (substituting $t$ for any
+free variable in any term $p$ doesn't create extra redex besides those which already
+exist in $t$ and $p$), and whenever we convert a redex of $t$ we obtain a term
+$t' \in$ RED$_T$, then $t \in$ RED$_T$.
+
+\end{enumerate}
+
+Finally we prove that all terms are reducible, which leads to the fact that all
+terms are strongly normalisable. To prove this by induction, we strengthen the
+induction hypothesis to handle the case of abstraction and come up with the
+following proposition, from which we can get the ultimate goal by putting $u_i =
+x_i$.\\
+Let $t$ be any term, and suppose all the free variables of $t$ are among $x_1,
+\dots,x_n$ of types $U_1, \dots, U_n$. If $u_1, \dots, u_n$ are reducible terms
+for types $U_1, \dots, U_n$ then $t[u_1/x_1, \dots, u_n/x_n]$ is reducible.
+
+
+\subsection{System F}
+
+System F is a typed $\lambda$-calculus that differs from the
+simply typed $\lambda$-calculus by the introduction of a mechanism of universal
+quantification over types. Formally, system F contains the following scheme for
+forming terms: if $v$ is a term of type $V$, then we can form
+$\Lambda X.v$ of type $\Pi X.V$, as long as the variable $X$ is not free in the
+type of any free variable of $v$. As such, the types in system F correspond to
+propositions quantified at the second order.
+
+System F allows recursive constructions to be embedded in a natural manner. For
+a structure $\Theta$ described by a finite number of constructors $f_1, \dots,
+f_n$ respectively of type $S_1, \dots, S_n$, its type in system F is 
+$T=\Pi X.S_1 \rightarrow S_2 \rightarrow \dots \rightarrow S_n \rightarrow X$. Recursivity
+is manifested by the fact that $X$ may appear within one of the types $S_i$. The
+type $S_i$ must itself be of the particular form $S_i = T^i_1 \rightarrow T^i_2 \rightarrow \dots T^i_{k_i} \rightarrow X$. Then the
+constructor $f_i$ can be encoded in system F as follows \\
+$f_i = \lambda x_1^{T^i_1}. \dots \lambda x_{k_i}^{T^i_{k_i}}. 
+\Lambda X. \lambda y^{S_1}_1. \dots \lambda y^{S_n}_n. y_i t_1\dots t_{k_i}$
+where 
+\begin{itemize}
+\item  $t_j = x_j$, $X$ doesn't occur in $T^i_j$
+\item  $t_j = x_j X y^{S_1}_1 \dots y^{S_n}_n$, if $X$ occurs positively in
+$T^i_j$.
+
+\end{itemize}
+
+Based on such scheme, both simple types (e.g. booleans, product type, and sum
+type) and inductive types (e.g. integer, list, and tree) can be encoded in
+system F. The intuition behind such scheme goes as follows. Terms of inductive
+types are encoded as high order functions with ``constructors functions'' as 
+the input arguments. For example, the integer type is encoded as follows \\
+$Int \overset{def} = \Pi X.X \rightarrow (X \rightarrow X) \rightarrow X$
+\\ and the integer n is represented by \\
+$\bar{n} = \Lambda X.\lambda x^X.\lambda y^{X \rightarrow X}.
+\underbrace{y(y(y\dots(y}_\text{n occurrences} x)\dots))$ \\
+These ``constructors'' are applied inductively based on the definition of the
+structure corresponding to the type. Such form makes it easy to
+define \emph{iterator} on terms of induction types in system F. However it's quite
+difficult to define recursion, for which generally, a full iteration has to be taken
+starting from the most ``atomic'', then reconstructs a new term (usually a
+tuple) iteratively and uniformly. Starting from recursion, all kinds of common operations
+related to those inductive types can be defined in system F, though the encoding
+is unacceptably tedious with very low efficiency in evaluation.
+
+Though it's not practical to program directly in system F
+due to low efficiency in both coding and execution, 
+system F serves as a formalization of the notion of parametric
+polymorphism in programming languages, and forms a theoretical basis for
+languages such as Haskell and ML.
+
+
+
+\newpage 
+\section{Summary of ``The Temporal Logic of Programs''
+  \cite{Pnueli1977Temporal}}
+  \label{section:LTL}
+This paper provides a unified approach to program verification, which applies
+to both sequential and parallel programs.
+
+To verify a program, first we need to define what a program is. For that,
+this paper presents a general framework to support the modelling of both
+sequential and concurrent programs. Informally, a program can be viewed as
+multiprocessor computer with shared memory, in which each processor runs its
+statements independently. But each time only one processor can execute
+one statement. The scheduling choice of the next processor to be stepped
+is nondeterministic.
+
+More formally, a dynamic discrete system including both sequential and
+concurrent program consists of $<S, R, S_0>$ where 
+\begin{itemize}
+\item
+$S$: the set of states the system may assume; 
+\item
+$R$: the transition relation holding between a state and
+its possible successors, $R \subseteq S \times S$; 
+\item
+S0: the initial state.
+\end{itemize}
+The state of a system is represented by $s = <\pi_1, \dots , \pi_n; u>$. 
+Each $\pi_i$
+may be considered as the value of the program counter for
+the i-th processor, while $u$ is
+the shared data component.
+
+In such model, the execution of statements on one processor can only
+influence the other processor though the usage of shared data. But the user
+can form up appropriate “atomic” statements based upon which program
+is built. Therefore it’s still feasible to model in the framework the
+execution of a concrete program in which interference between different
+phases of concurrent statements’ execution may exist.
+
+Based on the aforementioned framework, this paper illustrates how
+to specify properties of systems and their development in time. First, relations
+on states $q(s)$, expressed in a suitable language as well as explicit time
+variables $t$ are introduced. Then the properties of a program is formed as the
+development of the properties $q(s)$ in time $t$ (a.k.a. time functional $H(t,
+q) \equiv q(s_t))$, which can be interpreted as “at time instance $t$, the state
+of the system (denoted by $s_t$) satisfies the predicate $q(s)$”.
+
+Though any arbitrary complex time specification can be expressed in this
+way, the paper focuses on two major categories of them, invariance and
+eventuality (temporal implication). The former one is a statement with
+only one time variable which is universally quantified. It is in the form
+ $\forall t. H(t, q)$.  The later one is a
+statement of the form 
+$\forall t_1. \exists t_2. (t_2 \geq t_1) \land (H(t_1, \varphi) \rightarrow
+H(t_2,\psi))$, and we use $\varphi \rightsquigarrow \psi$ to denote such form.
+
+Three proof approaches (invariance, well founded
+set, and temporal reasoning) are presented in the paper for the reasoning of
+both invariance and eventuality properties. The basic idea of the third 
+approach, focused by the paper, is that one derives simple time dependency
+relations (e.g. eventuality) directly from the system transition rules ®
+and then use combination rules, and general logic reasoning to derive more
+complex properties.
+
+Focusing on establishing simple properties including invariance and
+eventuality, the paper chooses to find a minimal basis for temporal reasoning
+without taking the brute force approach of installing an explicit real time
+clock variable. Based on such design principle, two formalizations of the
+temporal reasoning are presented in the paper. First one is an axiomatic
+system (ER) with the eventuality connective $\rightsquigarrow$. 
+Without time variable $t$,
+the statement $\varphi \rightsquigarrow \psi$ is interpreted as that for all executions,
+if $\varphi$ is valid at certain moment, then $\psi$ would be valid as well
+later but eventually.
+
+Though system ER is proved to be sound and complete, it’s very difficult to
+express natural intuitive arguments for the behavior of concurrent programs in
+(ER). Therefore, the paper presents a second formalization, which actually
+adopts a fragment of the tense logic $K_b$. Two basic tense operators, $F$ and
+$G$ are introduced. Denoting the present by $n$, they can be interpreted as
+follows:
+\begin{itemize}
+\item
+F(p): $\exists t. t \geq n \land H(t,p)$
+
+\item
+G(p): $\forall t. t \geq n \rightarrow H(t,p)$
+
+\end{itemize}
+
+The $K_b$ fragment has the following properties. Firstly, since
+$G(p \rightarrow F(q))$ matches the notion of eventuality, 
+the $K_b$ fragment is at least
+as strong as (ER). Secondly, as a fragment of $K_b$, the system is proved to be
+complete. Finally, the $K_b$ fragment is isomorphic to the modal logic system
+$S_4$ with $G$ standing for $\Box$ and $F$ standing for $\Diamond$. Therefore the $K_b$
+fragment presented in the paper is decidable.
+
+A scheme of a proof in such logic system consists of two separate phases. In
+the first phase, one reasons about states, immediate successors and their
+properties to translate all the relevant properties of the program into
+basic tense-logic statements. This is done via the application of “domain
+dependent” axioms, which restricts the future to only those developments
+which are consistent with the transition mechanism of the system. The
+provision of such axioms in the logic system makes it distinguished from the pure
+tense logic $K_b$. In the second phase, one uses the pure logic rules in tense
+logic and manipulates those tense logical statements into the final result.
+
+Going still further, the paper points out that the validity of any arbitrary tense formula
+on a finite state system is decidable and can be proved in an extension to the $K_b$ fragment
+presented in the paper.
+
+In summary, the $K_b$ fragment presented in the paper can be viewed as
+a simplified version (with less operators) of Linear-Time Temporal Logic
+(LTL) illustrated in \cite{Huth1999Logic}. Users' natural intuitive reasoning of programs
+can be encoded in such systems in a formal and practical way. As a trade
+off, the expressive power of such systems is limited due to the lack of time
+variable. However, quite a lot of properties of time in practice can already
+be captured in such system, which leads to the growing application of LTL
+in the field of model checking.
+
+The approach taken in the paper can be classified as endogenous approach,
+in which we immerse ourselves in a single program which we regard as the
+universe, and concentrate on possible developments within that universe. With
+such special universe, it's natural trying to find a semantical proof
+(by model checking), which seems to be a more practical and economic way
+than trying to find a syntactical proof. I think that's another reason
+why LTL is so widely used in the field of model checking.
+
+However, to provide tools and guidance for constructing a correct system
+rather than just analyse an existing one, we have to take exogenous approaches,
+which usually suggest a uniform formalism dealing with formulas with varying
+context (program segment). Due to the complexity of such approaches, no
+dominant system has been provided to fulfill such tasks, especially for the
+concurrent programs.
+
+\newpage
+
+\section{Summary of ``The Theory and Practice of 
+  Concurrency''\cite{Roscoe1997Theory}} 
+  \label{section:CSP}
+
+Communicating Sequential Process (CSP) is a formal language for describing
+interactions between different components within a system on the level of
+communication. It was introduced by Hoare in the late 1970s. And since then,
+it has been widely developed and applied in the specification and verification
+of reactive and concurrent systems in which synchronization and communication
+play a key role.
+
+Components with independent inner states are modeled as \emph{processes} in
+CSP. There is no shared information between the process and its environment. They
+can only communicate with each other through the synchronization of
+\emph{events}. Such events are both atomic and instantaneous. The set
+of events that may be communicated by a process is said to comprise its
+alphabet $\Sigma$. If a process offers an event with which its environment
+agrees to synchronize, the event is performed. A finite sequence of events that
+a process may perform is call a \emph{trace} of the process. For (semantic)
+convenience the alphabet of each process is extended to contain two further
+events: $\csptau \notin \Sigma$ represents an internal event and $\csptick \notin
+\Sigma$ represents termination.
+
+
+CSP is equipped with a rich set of process operators as well as several atomic
+processes, based on which complicated processes can be defined recursively.
+For each process operator, CSP also provides a set of algebraic
+laws, by which we can reason about the equality of two processes.
+These laws are chosen in such manner that if two processes are ``equal'' according
+to the laws, their communicating behaviours are indistinguishable by the
+environment. CSP is thus categorized as a member of process algebras. The
+common process operators in CSP includes prefixing $\csppre{a}{P}$, external
+choice $\cspext{P}{Q}$, internal choice $\cspint{P}{Q}$, parallel composition
+$\csppara{P}{A}{Q}$, hiding $\csphide{P}{A}$, and sequential composition
+$\cspseq{P}{Q}$. The process $\csppre{a}{P}$ offers its environment
+the opportunity to synchronize on event $a$ in which case it
+then behaves like $P$. The process $\cspext{P}{Q}$ offers its environment
+a choice between $P$ and $Q$ based on synchronization with their initial
+events respectively. The process $\cspint{P}{Q}$ behaves like either $P$ or
+$Q$ but the choice is made internally, beyond environmental influence. The
+process $\cspseq{P}{Q}$ behaves like $P$ and, if that terminates, then
+behaves like $Q$. The process $\csphide{P}{A}$ executes the events in the
+set $A$ internally, without synchronization by its environment; they can
+be thought of as being replaced by $\csptau$ events. The parallel composition
+$\csppara{P}{A}{Q}$ requires $P$ and $Q$ to synchronize on each event $a
+\in A$, but performs other events of $P$ or $Q$ as determined by those
+processes. The atomic processes includes $STOP$, $SKIP$, $DIV$. $STOP$ models
+deadlock by offering no events. $SKIP$ models successful termination by
+offering only $\csptick$. $DIV$ models the process that does nothing but
+diverge, that is to enter into an infinite sequence of consecutive internal actions.
+
+CSP has a range of semantic models (denotational semantics) including the traces models
+$\csptracesmodel$, the stable failures model $\cspfailuresmodel$, and the
+failures-divergences model $\cspfdrmodel$. In the traces model of CSP, a process
+$P$ is represented by $traces(P)$ which is the set of all its possible traces. 
+Such semantics is useful in deciding questions of safety. Going still further, the 
+failures-divergences model is useful in specifying both safety and liveness
+properties. In such model, a process $P$ is represented by two sets of
+behaviours:
+\begin{itemize}
+
+\item $divergences$ are finite traces, each of which can lead the process to
+diverge, the net effect of which is that the process won't accept anything
+from the environment
+\footnote{The precise definition of $divergences$ should contain any finite
+sequence with prefix which can lead the process to diverge.
+Such definition offers a more concise theoretic treatment of refinement
+relation, yet matches our intuition that what a process can do after divergence
+is of no concern. But since such precise definition contains no more useful
+information about the behaviour of the process, most of time the simpler version
+of definition is used to illustrate the idea of $divergence$.
+}
+;
+
+\item $failures$ are pairs $(s, refusals)$ where $s$ is a finite trace of the
+process and $refusals$ is a set of events it can refuse after $s$
+\footnote{Due to the same reason as for the $divergence$,
+precisely, we should use $failures_{\bot}$ instead of $failures$, whose definition
+is $failures_{\bot}(P) = failures(P) \cup \{(s, X)| s \in divergences(P)\}$. 
+}.
+\end{itemize}
+The failures-divergences model allows us to assert that a process must eventually accept
+certain event from a set that is offered to it since refusal and divergence are the
+two ways a process can avoid doing this, and we can specify in this model that
+neither of these can happen. The stable failures model can be viewed as a simplified version of
+failures-divergence model, only containing the information of failures. Though
+not as powerful as the later, it is sometimes advantageous to use such model
+since the calculations required to determine if a process diverges are very
+costly.
+
+With the aforementioned semantic models, \emph{refinement} relation between
+processes can be defined as subset relation. Process $Q$ is a
+refinement of process $P$ means that $Q$'s behaviors are contained in those of
+$P$. Formally, for any of the three semantic models $\mathcal{M} \in
+{\csptracesmodel, \cspfailuresmodel, \cspfdrmodel}$, we define such relation by
+$P \sqsubseteq_{\mathcal{M}} Q \iff \mathcal{M}[Q] \subseteq \mathcal{M}[P]$
+where $\mathcal{M}[P]$ denotes the semantics of process $P$ in semantic model
+$\mathcal{M}$. Also we have that for each operator $\bigoplus$ in the language,
+$P \bigoplus Q$ is a refinement of $P_0 \bigoplus Q_0$ as long as $P$ is a
+refinement of $P_0$ and $Q$ is a refinement is $Q_0$ (with obvious modifications
+for non-binary operators). In this way, CSP provides a theoretic background
+for refinement development from abstract specification to implementation.
+
+From my perspective, it's difficult to understand the concepts of CSP
+without referring to its operational semantics as a tuition.
+The operational semantics of a process is a \emph{labelled transition system} (LTS), 
+which is a directed graph with a label on each edge. Each node can be viewed as
+a state of the process and the labels on the leaving edges of the node represent
+the actions the process can possibly take at that state. The set of
+possible labels is $\Sigma^{\csptau, \csptick} = \Sigma \cup \{\csptau, \csptick\}$. 
+For each CSP operators, we have several rules to derive the LTS of the
+top-level process from the LTS' of its syntactic parts (sub-processes). 
+The operational and denotational semantics of CSP are congruent in the sense
+that we can extract all three kinds of denotational semantics of a process from its
+LTS directly. Such congruence makes it possible to build model checkers for
+refinement checking of two processes practically.
+
+All three refinements are supported by the automatic refinement checker FDR
+which proves or refutes assertions of the form $P \sqsubseteq_{\mathcal{M}} Q$.
+FDR inputs processes expressed in \cspm, which is a standard for
+machine-readable CSP. \cspm{} expresses CSP by a functional language, offering
+constructs such as \emph{function}, \emph{let} expressions and supporting
+pattern matching. It also provides a number of predefined data types, including
+booleans, integers, sequences and sets, and allows user-defined data types to
+certain extent. In short, with the support of \cspm, the computation of 
+sub-process objects (e.g. events and process parameters) can be expressed along
+with the CSP process.  Besides FDR, some other tools such as ProB and PAT can
+do refinement checking as well. Furthermore, these tools can also do 
+LTL model checking of CSP model encoded in languages specific to these tools.
+
+
+
+
+\newpage
+\section{Summary of ``Model-Checking CSP''\cite{Roscoe1994Modelchecking}}
+  \label{section:modelcheckingcsp}
+The denotational semantics of processes in CSP equips us with a mathematical
+foundation for defining a special relation between processes called
+``refinement'' relation. As the co-worker of the inventor of CSP, the author of
+the paper describes his work of building a model-checker/refinement checker for
+CSP based on its operational semantics, experience of the application of such tool,
+ and prospects about the improvement of it.
+
+The standard model for CSP is the \emph{failures/divergences} model. Such model
+($\cspfdrmodel_{\Sigma}$) over a given finite alphabet $\Sigma$ of communication
+is the set of pairs of sets $(F, D)$ satisfying certain ``healthiness'' properties
+\footnote{Please refer to section \ref{section:CSP} for the precise definition of the
+failures/divergences model.}
+. The denotational semantics of a process $P$ is then an element $(F_P, D_P)$ of
+$\cspfdrmodel_{\Sigma}$. 
+Based on these, the refinement relation $P \sqsubseteq_{\cspfdrmodel} Q$
+\footnote{For the purpose of clarity, we may use the notation of $\sqsubseteq$
+instead since we only focus on the failures/divergences model in the paper.}
+is defined by $F_Q \subseteq F_P \land D_Q \subseteq F_P$.
+Due to the congruence between the denotational semantics and operational
+semantics of a process. The decision problem of whether 
+$P \sqsubseteq Q$ can be carried out by their operational semantics.
+
+This paper only tackles the problem in which the operational semantics of the
+processes on both sides of the relation are of \emph{finite state}. This simply
+means that, as the operational semantics is unfolded, the resulting LTS contains
+only finite nodes. Also the paper doesn't take into consideration the
+termination of process, which means that the LTS' being worked on are finite
+directed graphs where all edges are labelled with an action, either $\tau$ or
+visible. But it's not difficult to add the support of $\csptick$ to the method
+developed in the paper.
+
+The basic idea of refinement checking is that, given a certain trace $s$ and a
+reachable state in the implementation process (right-hand of the refinement
+relation), there is a corresponding state in the specification process
+(left-hand of the refinement) reachable on the same trace and has the same
+behaviour.
+
+Typically, the LTS arising from CSP descriptions contains a high degree of
+nondeterminism, in the sense that after any trace $s$ of visible actions there may
+be many states of a system which the process might be in. This can happen both
+because of the existence of invisible actions and because of the branching that
+occurs when a node has two identically-labelled actions, whether visible or
+invisible. Any method for deciding refinement between these systems will have
+to keep track of all the states reachable at the specification side on a given
+trace $s$. The method provided in the paper accomplishes this by normalizing the
+specification process before doing the refinement checking. The normalization
+is processed in two stages. In first stage, multiple nodes in the LTS, which 
+are reachable after certain trace, are merge into one node in the new LTS. And
+the new node conveys all the information of the original nodes, namingly all the
+$refusals$ sets of the original nodes. Also if one of the nodes being merged
+diverges in the original LTS, then the new node is marked diverging in the new
+LTS. Such strategy matches our idea that if certain trace can lead the process
+to diverge, then whatever after is of no concern. Second stage is actually a
+bisimulation checking, in which bisimilar nodes are merged together.
+
+After normalization, the refinement checking is conveyed by enumerating and
+checking all the
+possible pairs $(v, w)$ of nodes satisfying the following condition: $\exists$
+traces $s$, such that $v$ is reachable after $s$ in
+the normalized specification process and $w$ is reachable after $s$ in
+the implementation process. For the refinement checking in the
+failures/divergences model, the checking on each pair includes the compatibility
+of initial actions, divergence, and refusals. If we only check the initial
+actions of the nodes in the pair, then this method is degraded into a refinement
+checking in the traces model. Normally the enumeration of pairs is done by DFS
+(Depth First Search). If the checking on certain pair fails, then the whole
+refinement relation doesn't hold. The path leading to such pair serves as a
+counter-example. BFS (Breadth First Search) can then be applied to find the
+shortest path leading to an error.
+
+A tool called FDR was built to do the refinement checking based on the method
+shown above with the specification and implementation processes encoded in
+the \cspm{} language. Besides the syntax of \cspm, FDR also puts some extra 
+syntactic restrictions on the input processes to enforce finite state space.
+However process with infinite state space can still be created under these
+restrictions due to the use of recursion and infinite data types. It's the
+users' responsibility to treat such processes with care.
+
+
+Though checking failures/divergence refinement of LTS is PSPACE-hard,
+fortunately ``real'' process definitions simply do not behave as badly as some
+pathological examples. But great effort has to be taken when building FDR due 
+to the efficiency concern. The paper discusses the usage of hashmap and sorted
+list for implementing set in different parts of FDR and justifies such choices.
+Going still further, the paper discusses the possibilities to improve
+FDR to handle more practical usage. Three possibilities I think more applicable
+goes as follows. First one is to build certain
+logical inference tool based on the algebraic rules of CSP to alleviate the work
+of the model-checking. Second one is to compress the state-space so
+that we can prove results of the state space in blocks instead of expanding the
+state-spaces of processes fully and explicitly. The third one is to include
+symbolic representations of data in the LTS instead of expanding the LTS for each
+possible values. Such method is applicable to CSP processes in which data (at
+least most of the data) does not alter the control-flow of a process. Some work 
+related to this topic has been done in \cite{Lazic1999Semantic}.
+
+\newpage 
+\section{Summary of ``How to Make FDR Spin --- LTL Model Checking of CSP by
+Refinement''\cite{Leuschel2001How}}
+  \label{section:FDRSPIN}
+
+In ``classical'' model checking, systems to be checked are encoded in the
+specification language used by the model checker. Extracted from these
+specifications, models of the systems are then checked against the expected
+correctness properties, which are encoded in certain formal language, by the
+model checker. Among all those formal languages, Linear-time Temporal Logic 
+(LTL) allows the specification of temporal properties encountered in practice
+ in a natural and succinct manner, which makes LTL model checking a common
+approach for the verification of hardware and software system.
+
+The concept of refinement relation in Communicating Sequential Process (CSP)
+offers a new approach for model checking. In such method, system to be checked is
+specified as a process (implementation process) in CSP, while the correctness 
+properties are also specified as a process (specification process) in CSP. The
+verification of correctness properties of the system is then turned into the
+question whether the implementation process (or process derived from it) is a
+refinement of the
+specification process, which can be decided by the refinement checker (e.g.
+FDR). This refinement-based approach suits itself very nicely to the stepwise
+development of systems. However there is no general way to
+generate the specification process and the appropriate derivation of the
+implementation process for any correctness properties, which makes such approach
+less usable in practice. To tackle this, the paper presents a new approach which is also based
+on refinement checking but can check the implementation process against the
+correctness properties specified in LTL directly and mechanically. 
+
+In ``classical'' LTL model checking, that a system satisfies an LTL formula $\phi$ 
+means that all of its computations satisfy $\phi$ and a computation is defined as an
+infinite sequence
+of states, the transitions of which are possbile in the system. Similar concept is applied to
+CSP process in this paper. That a process satisfies an LTL formula $\phi$ means that
+the process cannot deadlock and all of its infinite traces satisfy $\phi$. 
+And an infinite trace of a process is an infinite sequence of events that
+the process can possibly communicate with. Given an infinite trace $\pi =
+\pi_0,\pi_1,\dots$. We define $\pi^i$ to be suffix of $\pi$ starting from
+$\pi_i$. $\pi \models \phi$ (a trace $\pi$ satisfies $\phi$) is
+defined as follows:
+\begin{itemize}
+\item[-] $\pi \not\models false$
+\item[-] $\pi \models true$
+\item[-] $\pi \models a$ iff $\pi_0 = a$
+\item[-] $\pi \models \neg a$ iff $\pi_0 \neq a$
+\item[-] $\pi \models \phi \land \psi$ iff $\pi \models \phi$ and $\phi \models \psi$
+\item[-] $\pi \models \phi \lor \psi$ iff $\pi \models \phi$ or $\phi \models \psi$
+\item[-] $\pi \models X\phi$ iff $\pi^1 \models \phi$
+\item[-] $\pi \models \phi\ U \psi$ iff there exists a $k \geq 0$ such that
+$\pi^k \models \psi$ and $\pi^i \models \phi$ for all $0 \leq i < k$
+\item[-] $\pi \models \phi\ R\ \psi$ iff for all $k \geq 0$ such that $\pi^k
+\models \neg \psi$ there exists an $i$, $0 \leq i < k$ such that $\pi^i \models \phi$
+\end{itemize}
+
+We denote by $|\phi|_\omega$ the set of infinite traces which satisfy the
+formula $\phi$. It's difficult and sometimes impossible to come up with a
+process ($Spec_\phi$) which can generate the same set of infinite traces
+ as $|\phi|_\omega$. Even if we find
+$Spec_\phi$, a traces refinement test $Spec_\phi \sqsubseteq_\csptracesmodel S$
+is not adequate to model check $S \models \phi$ since refinement checking in FDR is based
+on \emph{finite} traces only. Going further, the papers points out that though failures
+refinement test can guaratantee the preservation of LTL properties as long as
+$Spec_\phi$ is finite-branching, such condition doesn't hold in most cases
+in practice.
+
+One more problem with the previous definition of satisfaction of LTL formula
+is that it overlooks the fact that a CSP process which may deadlock
+is still possible to ``satisfy'' an LTL formula intuitively. To tackle this, the
+paper introduces an extra event $\Delta$ which indicating deadlock. Any
+deadlocking trace of the process $S$ is then turned into an infinite trace by
+appending an infinite number of $\Delta$'s. To capture the intuition when a
+deadlocking trace satisfies an ordinary LTL formula $\phi$ over $\Sigma$, we can
+translate from an LTL formula $\phi$ into a formula $\phi_{\Delta}$ over $\Sigma \cup \{\Delta\}$,
+e.g., $\phi\ U \psi$ is translated to $(\neg \Delta \land \phi)\ U \psi$.
+A process $S$ satisfies a LTL formula is now defined as follows:
+\\$S \models \phi$ iff $\forall \pi \in|S|_\Delta, \pi \models \phi_{\Delta}$
+where $|S|_{\Delta} = |S|_{\omega} \cup \{\gamma\Delta^{\omega} | (\gamma,
+\Sigma) \in failures(S)\}$.
+
+By existing automaton theory, we can create a B\"uchi automaton $\mathcal{B}$
+(from $\neg \phi_{\Delta}$)
+over $\Sigma \cup \{\Delta\}$ such that $|\mathcal{B}| =
+|\neg \phi_{\Delta}|_\omega$, where $|\mathcal{B}|$ is the set of accepting words of
+$\mathcal{B}$. With the aforementioned setting, the question whether a process
+S satisfies the LTL formula $\phi$ ($S \models
+\phi$) is now turned into the question whether $|S|_{\Delta} \cap |\mathcal{B}| 
+= \phi$. It's easy to see that if the answer is yes, then $S \models \phi$, otherwise $S
+\not\models \phi$.
+
+At this stage, we have two possible strategies. First is to create another
+B\"uchi automaton $\mathcal{A}$ whose set of accepting words is $|S|_{\Delta}$
+and then use existing algorithm to check the emptiness of the intersection of
+the sets of accepting words of these two B\"uchi automata (a.k.a checking the
+emptiness of $\mathcal{A}
+\cap \mathcal{B}$). Research following this path for LTL checking CSP 
+can be found in \cite{Sun2009Model}.
+
+This paper takes the second strategy in which a process $TESTER$ is generated from the B\"uchi automaton
+$\mathcal{B}$ and the decision problem is then turned into several refinement
+checks based on the parallel composition of $TESTER$ and $S$. The intuition
+behind this is that $TESTER$ ``represents'' the traces accepted by the B\"uchi
+automaton $\mathcal{B}$, and we want to check whether the process $S$ has
+``similar'' traces to that of the $TESTER$. If it has, then $S$ has a trace $\pi
+\models \neg \phi$ which indicates that $S \not\models \phi$. Concretely, the paper 
+describes the method as follows.
+
+Noticing that the B\"uchi automaton $\mathcal{B}$ may accept certain traces
+(in which events in $\Sigma$ appear after $\Delta$) which no CSP process 
+can possibly generate, this paper translates $\mathcal{B}$ into a simplified
+automaton called
+B\"uchi $\Delta$-automaton $\mathcal{B}_\Delta$ whose accepting set of words
+$|\mathcal{B}_\Delta| = |\mathcal{B}| \cap (\Sigma^\omega \cup
+\Sigma^*.\Delta^\omega)$. 
+The process $TESTER$ can be generated from $\mathcal{B}_\Delta$
+with the introduction of three extra events $success$, $deadlock$, and $ko$.
+And to check $S \models \phi$, the following two checks shall be performed.
+\begin{enumerate}
+
+\item $SUC \sqsupseteq_\csptracesmodel 
+  (\csppara{S}{\Sigma}{TESTER}\backslash(\Sigma \cup \{deadlock, ko\})$ 
+  where $SUC = \csppre{success}{SUC}$
+
+\item $\csppre{deadlock}{STOP} \sqsupseteq_\cspfailuresmodel 
+       (\csppara{S}{\Sigma}{TESTER}(\Sigma \cup \{success\})$ 
+
+\end{enumerate}
+By detailed discussion, the paper shows that either of two checks succeeds iff
+$S \not\models \phi$.
+
+This paper uses FDR refinement checker to perform the refinement checking
+involved in the process, which means that optimisations such as hierarchical
+compression, data-independence and induction can be applied. But it's unclear
+whether the overall system has better performance over the mothod developed
+following the first possible strategy.
+Another issue is that since FDR doesn't provide any
+``candidiate'' trace when the refinement check succeeds, 
+which indicates that $S \not\models \phi$, there is no way to get the
+counter-example needed by the user to reason about the cause of the failure.
+
+
+\newpage
+
+\section{Summary of ``Polymorphic CSP Type Checking''\cite{Gao2001Polymorphic}}
+  \label{section:CSP_Type_Checking}
+
+This paper illustrates the design of a type checker for CSP$_M$, which is based
+on Milner's type inference algorithm and Robinson's unification algorithm.
+
+To begin with, this paper explains the classical type inference algorithm, which
+is similar to the one I implemented for the CS 552 Compiler course. Then it
+introduces two categories of types in addition to types usually associated with
+functional languages (e.g. \emph{int} and \emph{bool}): unqualified types and qualified types.
+Unqualified types including \emph{process}, \emph{event} function type, product
+type, sequence type, set type, union type (I think this one is similar to
+datatype in ATS.), dot type (unique to \cspm{}'s dot composition syntax) and
+yield type (type for channels and tags of datatype). Qualified types are types
+subject to additional constraints. There are only four constraints, which indicate
+that certain type must have the following four kinds of properties: 1. the type
+must supports equality operation; 2. the type supports ordering comparison; 3.
+the type is actually a well-formed function type; 4. the type must be a process
+type. (Compared to ATS, such constraints are relatively simple.)
+
+The paper presents an extension of Robinson's unification algorithm so that it
+can handle both the dot and qualified types. Going still further, a type
+inference algorithm, which extends Milner's polymorphic type checking algorithm,
+is presented.
+
+I think I'd better acquire some knowledge about type unification and type
+inference from textbook so that I can fully understand this paper.
+
+\newpage
+\section{Summary of ``Java2CSP: A System for Verifying Concurrent Java 
+Programs''\cite{Shi2000Java2CSP}}
+  \label{section:java2csp}
+This paper presents the system \textbf{Java2CSP} which translates concurrent
+Java programs into \cspbold{} processes, which can be then be fed to
+model-checking tool FDR to verify the synchronization behaviour of the
+Java program, such as deadlock and livelock.
+
+\cspbold{} processes which simulate those mechanisms that are supported by Java
+but not by \cspbold{} such as shared variables, threads and monitors are called
+\emph{process patterns}.
+
+The Java bytecode of a Java program is used as the source code for the
+translation. The main reason I agree with is that ``A Java program can include
+some auxiliary sources from libraries or from other users, which are sometimes
+only available in their bytecode representations''.
+
+One challenge is to provide CSP specification of corresponding mechanism in 
+Java programs. For this, a set of CSP process patterns have been developed which specify
+the general behaviour of a set of Java methanisms, like shared variables,
+threads and monitores. Also the abstract reperessentation of Java object-model,
+types, and algorithms have been formalized.
+The author says algorithms are implemented to identify threads which can 
+run concurrently, and to identify
+variables which influence the behaviour of threads in different ways. 
+But no further illustration in the paper at all.
+
+Another challenge is to generate CSP model which can be analysized efficiently by
+tools such as FDR.
+
+\subsection{Quote}
+The output of Java2CSP is again the input for FDR, the improvement of hte
+quality of the output format with respect to the readability and the
+recoverability is also an indispensable effort to make the system practical
+useful for large Java programs.
+
+\subsection{Comment}
+The tool now only supports the verification of deadlock and livelock behaviours
+of the Java programs. No support for the verification of LTL properties.
+
+
+
+\newpage
+\section{Summary of ``Model-Checking CSP-Z: Strategy, Tool Support 
+  and Industrial Application''\cite{Mota2001ModelChecking}}
+  \label{section:modelcheckingcspz}
+
+
+\newpage
+\section{Summary of various model checkers}
+  \label{section:var_model_checker}
+
+\subsection{SAL}
+The fact that SAL is based on the symbolic approach to model checking and that
+the symbolic technique is not suitable for software analysis where dynamic
+creation of objects/data loses relevance in the context of applicative RAISE
+specifications, where no dynamic object creation is possible.  Together with
+this idea are the multiple advantages that the symbolic management of states
+can offer: sets of states can be handled collectively (better temporal
+performance in some cases) and the ability to handle much bigger state
+spaces due to symbolic representation (compared with the explicit state
+representation approach).\cite{Perna2005Model}
+
+\subsection{List of model checker}
+http://en.wikipedia.org/wiki/List\_of\_model\_checking\_tools
+
+\subsection{Erlang}
+Erlang is based on the ACTOR model, not CSP. The main practical differences
+between Erlang and CSP is that Erlang uses asynchronous dynamically-typed
+messages sent to a particular address (process id), whereas CSP systems usually
+deal with synchronous messages sent down a particular, typed channel. But
+they are both message-passing systems with the idea of removing shared mutable
+data, as you say. For an implementation of CSP in the pure functional language
+Haskell, see my library CHP (http://www.cs.kent.ac.uk/projects/ofa/chp/).
+(From internet.)
+
+
+\newpage
+\section{Summary of ``An Analytical and Experimental Comparison of CSP 
+Extensions and Tools''\cite{Shi2012Analytical}}
+  \label{section:cspm_vs_csps}
+\subsection{summary}
+This paper compares \cspm{} and \csps{} from the aspects of syntax, operatioinal
+semantics as well as their supporting tools such as \fdr{}, \prob{}, and
+\pat{}. Such comparison can be used to guide users to choose the appropriate CSP
+extension and verification tool based on the system characteristics.
+
+I didn't find the information I am seeking about the roles of channels in
+\csps{} when dealing with refinement checking. Do the messages passed through
+channels constitute the events of refinement checking? I don't know.
+
+4.1 of this paper summaries various optimization approaches used by different
+model checkers. Also it compares the abilities of \fdr{} and \pat{} to do LTL
+checking.
+
+This paper includes several benchmarks for the comparison of the efficiency of
+different model checkers.
+
+
+\subsection{quote}
+enhancing CSP by taking data and other system aspects into account
+
+\csps{} integrates high-level CSP-like process operators with low-level
+procedure code.
+
+formally model concurrent systems, compositional operators, non-trivial data
+structures, different verification capabilities
+
+perspectives of modeling and verification needs, reasoning power of their
+supporting tools, reason techniques and verifiable properties, the semantic
+differences between \cspm{} and \csps{} lead to different state spaces and
+optimizaitons in model checking
+
+expression language
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+% 
+% \bibliographystyle{apalike}
+\bibliographystyle{plain}
+\bibliography{alex_ren}
+ 
+
+\section{Summary of ``Combining CSP and B for Specification and 
+Property Verification''\cite{Butler2005Combining}}
+
+
+\subsection{quote}
+The state of a B machine is a mapping from variables to values, 
+while the state of a CSP pocess is a syntactic process expression.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+% 
+% \bibliographystyle{apalike}
+\bibliographystyle{plain}
+\bibliography{alex_ren}
+ 
+\end{document}
+
+
+
