@@ -48,6 +48,9 @@
 \newcommand{\fdr}{FDR}
 \newcommand{\pat}{PAT}
 \newcommand{\prob}{PRoB}
+\newcommand{\sal}{SAL}
+\newcommand{\kratos}{KRATOS}
+\newcommand{\sysc}{SystemC}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1092,23 +1095,118 @@ expression language
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newpage
-% 
-% \bibliographystyle{apalike}
-\bibliographystyle{plain}
-\bibliography{alex_ren}
- 
-
 \section{Summary of ``Combining CSP and B for Specification and 
 Property Verification''\cite{Butler2005Combining}}
+\subsection{summary}
+This paper illustrates how a system could be specified as a combination of a CSP
+process and a B model, and gives out the operational semantics of such system
+based on the semantics of B model and CSP process. (I like the description.)
+An interpreter was implemented in Prolog for CSP, and was later combined with
+ProB to give out the operational semantics of the whole system. With this tool,
+we can use CSP to specify some desirable or undesirable behaviours and use PRoB
+to find traces of the B machine that exhibit those behaviours.
 
 
 \subsection{quote}
 The state of a B machine is a mapping from variables to values, 
 while the state of a CSP pocess is a syntactic process expression.
+Whenever possible there is value in applying model checking to a size-restricted
+version of a B model before attempting semi-automatic deductive proof.
+
+\section{Summary of ``Probing the Depthes of CSP-M: A new FDR-compliant
+validation Tool''\cite{Leuschel08}}
+  \label{section:prob_csp}
+\subsection{summary}
+The paper describes the implementation of a parser and an interpreter for CSP
+using Haskell and Prolog, based on which a new animation and model checking tool
+for CSP is created and incorperated into ProB. This tool can do refinement
+checking as well as LTL checking on CSP. Also this tool can be applied to the
+validation of combined B and CSP specifications; see \cite{Butler2005Combining}.
+
+\section{Summary of ``Model Checking RAISE Applicative
+Specifications''\cite{Perna2007Model}}
+  \label{section:model_checking_raise}
+\subsection{quote}
+these tools are proof langauges, not suitable for temporal logic verification.
+
+Given the fact that FDR's input language is quite expressive, this approach
+allows a straightforward translation of most Z predicates (sequences and
+sequence operations for example), yet with considerable loss of abstraction.
+
+\section{Summary of ``Kratos -- A Software Model Checker for
+SystemC''\cite{Cimatti2011Kratos}} 
+  \label{section:kratos_model_checker}
+\subsection{summary}
+A SystemC design is a complex entity comprising a multi-threaded
+program where scheduling is cooperative, according to a specific set of rules,
+and the execution of threads is mutually exclusive. This paper presents
+\kratos{}, a software model checker providing two different analyses for
+verifying safety properties (in the form of program assertions) of
+\sysc{} designs.
+
+First, \kratos{} implements a sequential analysis based on lazy predicate
+abstraction for verifying sequential C programs. and translates from SystemC to
+a sequential C program by encoding both the threads and scheduler in the
+\sysc{} design. Such analysis is a reimplementation of the same analysis
+performed by existing software model checkers based on the lazy predicate
+abstraction, like BLAST and CPACHECKER.
+
+Second, \kratos implements a novel concurrent analysis, called ESST, that
+combines \emph{Explicit} state techniques to deal with the \sysc{}
+\emph{Scheduler}, with \emph{Symbolic} techniques, based on lazy predicate
+abstraction, to deal with the \emph{Threads}. Another way to put it, the authors
+built a scheduler, which is more concrete than the abstract model used for
+translating \sysc{} design into a sequential C program mentioned above, 
+exploring all possible schedules, and then apply similar analysis
+method as sequential analysis to each sheduled thread. 
+
+Translations from SystemC designs into C prgrams used in the aforemented two
+kinds of analyses are performed by SYSTEMC2C, a new back-end of PINAPA.
+
+\kratos{} is built on top of an extended version of NuSMV, which is tightly
+integrated with the MATHSAT SMT sovler. \kratos{} replies on these two to carry
+out the aforementioned two analyses.
+
+In essence, \kratos{} is a software model checker for sequential and threaded C
+programs. (I think it's a special subset of C since the C programs are
+translated from \sysc{}.) \kratos{} implements the lazy predicate abstraction and the lazy
+abstraction with interpolants for analyzing sequential programs, and ESST for
+analyzing threaded programs. \kratos{} also provides a specialization of ESST to
+\sysc{} verification. \kratos{} is built on top of an extended version of NUSMV,
+which is tightly integrated with MATHSAT SMT solver.
+
+I like the section for ``Novel Functionalities''.
+
+\subsection{quote}
+symbolic lazy predicate abstraction technique
+
+SMT-based techniques for program abstractions and refienements
+
+Due to space limit, the results of an experimental evaluation that compares
+\kratos{} with other model checkers on various benchmarks can be found in xx.
+
+cooperative scheduler
+
+conterexample-guided abstraction refinement (CEGAR)
+
+``off-the-shelf'' software model checking techniques
+
+hybrid predicate that integrates BDDs and SMT solvers, as described in xx.
+
+Bounded model checking (BMC)
+
+We have observed that different encodings for transitions can affect the
+preformace of \kratos{}.
+
+Depending on the nature of the problem, the availablity of several encodings
+allow users to choose the most effective one for tackling the problem.
+
+The concurrent analysis, based on the novel ESST algorithm, combines explicit
+state techniques with lazy predicate abstraction to verify threaded C program
+that models a \sysc{} design.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 % 
 % \bibliographystyle{apalike}
