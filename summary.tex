@@ -1205,8 +1205,89 @@ The concurrent analysis, based on the novel ESST algorithm, combines explicit
 state techniques with lazy predicate abstraction to verify threaded C program
 that models a \sysc{} design.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Summary of ``Yet Another Model Checker for PROMELA -- the
+Transformation Approach''\cite{Zhao2010Yet}} 
+  \label{section:yet_csp_promela}
+\subsection{summary}
+This paper illustrates the way of translating PROMELA code into \csps{} code. A
+very detailed comparison of all parts of PROMELA and \csps{} is given. Some
+techniques for writing programs in \csps{} is given to support encoding features
+not yet supported in \csps{}.
+
+\subsection{quote}
+Simulation and Verification are critical for system
+design. In system verification, liveness is always a property
+with concern. Fairness is important to prove liveness
+properties. Without fairness, verification of liveness
+properties may produce unrealistic loops during which one
+process or event is unfairly favoured. Nonetheless, there are
+few established tools supporting verification under strong
+fairness.
+
+The design and verification of concurrent and real-time
+systems are notoriously difficult problems. In particular, the
+interaction of concurrent processes in large systems often
+leads to subtle bugs that are extremely difficult to discover
+using the conventional techniques of simulation and testing.
+Automated verification based on model checking promises a
+more effective way of discovering design errors, which has
+been used successfully in practice to verify complex software
+systems.
+
+SPIN is deficient as having no supoort for strong fairness. The only way to
+perform verification under strong fairness is to encode the fairness constraints
+as part of the property.
+
+To achieve good performance, advanced techniques are
+implemented in PAT, e.g. partial order reduction [x], process
+counter abstraction [x], bounded model checking [x], parallel
+model checking [x], etc.
+
+In PROMELA, channels can be used as parameters for the
+purpose of communication between processes.
+PAT doesn’t support this feature for performance reason.
+Passing local declared channel between processes or
+checking data types, considering the case when channel is
+used as message type, will definitely slow down the speed of
+verification, especially when the verification needs to search
+all possible system status exhaustively.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``Operational Semantics for Model Checking 
+Circus''\cite{Woodcock2005Operational}} 
+  \label{section:operational_circus}
+\subsection{summary}
+todo
+
+\subsection{quote}
+
+\section{Summary of ``Compositional Network Mobility''\cite{ZaveCompositional}} 
+  \label{section:CNM}
+\subsection{summary}
+This paper gives out a ``geomorphic view of networks in which the layer is the
+fundamental module of network software, and is defined constructively in terms
+of its components. Such view is relatively simple and clear compared to the real
+networking infrastructure. Based on this view, the authors specify the vertical
+networking stack in Promela and model check it against properties such as
+deadlock. The authors also give out the definition of mobility and specify it
+formally using Alloy.
+
+According to the ``geomorphic'' view of networks, a level consists of multiple
+layers, which can be thought of as certain subnet.
+
+Two types of mobility (attachment, location) are similar. The difference lies in
+the level currently under concern in the whole implementation of mobility.
+
+Hard to tell the contribution of the paper. The stack model may be referred when
+we want to implement our own networking stack instead of imitating existing
+Socket implementation.
+
+
+
+\subsection{quote}
 \newpage
 % 
 % \bibliographystyle{apalike}
@@ -1214,6 +1295,15 @@ that models a \sysc{} design.
 \bibliography{alex_ren}
  
 \end{document}
+
+
+
+
+
+
+
+
+
 
 
 
