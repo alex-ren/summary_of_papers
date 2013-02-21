@@ -1206,6 +1206,62 @@ state techniques with lazy predicate abstraction to verify threaded C program
 that models a \sysc{} design.
 
 
+
+\section{Summary of ``Linearizability: A Correctness Condition for Concurrent
+Objects''\cite{xxx}} 
+  \label{section:linearizability_con_obj}
+\subsection{summary}
+The paper gives out a formal definition of linearizability based on the concept
+of history. It also compares linearizability with other correctness properties
+of concurrent systems, such as sequential consistency and serializability.
+
+The notion of ``equivalence'' between two histories is important.
+
+
+\subsection{quote}
+To decide whether a concurrent history is acceptable, it is necessary to take
+into account the object’s intended semantics. For example, acceptable concurrent
+behaviors for FIFO queues would not be acceptable for stacks, sets, directories,
+etc.
+
+Informally, a concurrent system consists of a collection of sequential threads of
+control called processes that communicate through shared data structures called
+objects. 
+
+
+Formally, an execution of a concurrent system is modeled by a history, which
+is a finite sequence of operation invocation and response events. 
+
+Angle brackets
+for events and square brackets for operations are omitted where they would
+otherwise be unnecessarily confusing; object and process names are omitted
+where they are clear from context.
+
+Restricting
+attention to complete(H’) captures the notion that the remaining pending
+invocations have not yet had an effect.
+
+
+L2 states that this
+apparent sequential interleaving respects the real-time precedence ordering of
+operations.
+
+A linearizable object is one whose concur-
+rent histories are linearizable with respect to some sequential specification.
+
+A concurrent system based on a nonlocal
+correctness property must either rely on a centralized scheduler for all objects,
+or else satisfy additional constraints placed on objects to ensure that they follow
+compatible scheduling protocols. 
+
+Linearizability can be viewed as a special case of strict serializability where
+transactions are restricted to consist of a single operation applied to a single
+object. 
+
+An immediate practical consequence is that con-
+currency control mechanisms appropriate for serializability are typically inap-
+propriate for linearizability because they introduce unnecessary overhead and
+place unnecessary restrictions on concurrency. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
 % 
