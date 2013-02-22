@@ -18,6 +18,8 @@ clean:
 	rm -rf *.log
 	rm -rf *.bbl
 	rm -rf *.blg
+	rm -rf *.toc
+	rm -rf *.idx
 
 .PHONY: all
 cleanall: clean
