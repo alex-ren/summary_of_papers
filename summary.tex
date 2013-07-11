@@ -1256,7 +1256,7 @@ all possible system status exhaustively.
 
 
 \section{Summary of ``Linearizability: A Correctness Condition for Concurrent
-Objects''\cite{xxx}} 
+Objects''\cite{Herlihy1990Linearizability}} 
   \label{section:linearizability_con_obj}
 \subsection{summary}
 The paper gives out a formal definition of linearizability based on the concept
@@ -1360,10 +1360,128 @@ todo
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
+\section{Summary of ``Formal Analysis of GPU Programs with Atomics 
+via Conflict-Directed Delay-Bounding''\cite{Chiang2013Formal}} 
+  \label{section:gpu_atomics_conflict}
+\subsection{summary}
+I am not sure what the problem really is. I guess that it may be just an ordinary
+problem in multithreading programming. But the authors' description of the problem
+in the environment of GPU programming is really confusing. 
+
+The algorithm presented in the paper is for detecting datat races. It is related to
+concepts including ``conflict-directed'' and ``delay-bounded''. I need to read
+more paper in the reference to understand it.
+
+Still, this paper serves as a starting point for reference into the field of
+verifying GPU programming.
+\subsection{quote}
+
+\subsection{reference}
+\begin{itemize}
+\item H. Attiya, R. Guerraoui, D. Hendler, P. Kuznetsov, M. M. Michael, and M. Vechev.
+Laws of order: expensive synchronization in concurrent algorithms cannot be eliminated. 
+In POPL, pages 487--498, 2011. \cite{xxx}
+\item E. M. Clarke, O. Grumberg, and D. A. Peled. Model Cheking. MIT Press, 1999.
+\item P. Collingbourne, C. Cadar, and P. Kelly. Symbolic testing of OpenCL code. In
+Haifa Verification Conference, 2011. \cite{xxx}
+\item C. Flanagan and P. Godefroid. Dynamic partial-order reduction for model checking
+software. In POPL, pages 110–121, 2005. \cite{xxx}
+\item A. Lal and T. Reps. Reducing concurrent analysis under a context bound to
+sequential analysis. Form. Methods Syst. Des., 35(1):73–97, Aug. 2009.
+\cite{xxx}
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Summary of ``Bandera: Extracting Finite-state Models from Java Source Code''\cite{Corbett2000Bandera}} 
+  \label{section:bandera_java}
+
+\subsection{quote}
+\begin{enumerate}
+\item Two problems with model checking
+\begin{itemize}
+\item program $\Rightarrow$ model
+\item state explosion
+\end{itemize}
+
+\item
+\begin{itemize}
+\item irrelevant component elimination
+\item data abstraction
+\item component restriction
+\end{itemize}
+
+\item
+A variety of dynamic constructs includes the following
+\begin{itemize}
+\item unbounded heap allocation
+\item unbounded recursion
+\item dynamic creation of heap
+\item polymorphism
+\end{itemize}
+
+\item infer the bounds on the degree of dynamism in these constructs
+
+\item automated support for the following
+\begin{itemize}
+\item model construction
+\item error, trace interpretation
+\end{itemize}
+
+\item slicing
+
+\item
+\begin{itemize}
+\item monolithic model checking
+\item component based
+\end{itemize}
+\end{enumerate}
+
+\subsection{summary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
 \section{Summary of ``xxxx''\cite{xxxxxxx}} 
   \label{section:xxxxxx}
 \subsection{summary}
+xx
+
+\subsection{quote}
 todo
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Summary of ``xxxx''\cite{xxxxxxx}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+xx
+
+\subsection{quote}
+todo
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Summary of ``xxxx''\cite{xxxxxxx}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+xx
+
+\subsection{quote}
+todo
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{Summary of ``xxxx''\cite{xxxxxxx}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+xx
+
 \subsection{quote}
 todo
 
