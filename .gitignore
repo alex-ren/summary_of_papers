@@ -1,3 +1,11 @@
 *.swp
 *.swo
+*.aux
+*.bbl
+*.blg
+*.log
+*.toc
+
+*.dvi
+
 
