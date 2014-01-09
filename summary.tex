@@ -1479,6 +1479,151 @@ ASIC (Application Specific Integrated Circuit)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
+\section{Summary of ``A Type System Equivalent to a Model Checker''\cite{Naik2008Type}} 
+  \label{section:type_eq_model_checker}
+\subsection{summary}
+The type introduced in this paper is different from the type in ATS or 
+some other ``normal'' types in the sense that it is based on global abstract
+context, while ``normal'' types describe local properties. I believe that's
+why the type checking is equivalent to model checking. Another way to put it,
+type is attachment to statement, describing the possible changes of the global
+contexts caused by the statement.
+
+I may look into the technique used in the paper to prove the equivalence between
+type checking and model checking. Also the application in the deadline analysis
+seems very interesting.
+
+Both the type checking and model checking can only verify temporal safety properties.
+Nothing is mentioned about the temporal liveness properties.
+
+\subsection{quote}
+Model checking soundness is typically proved by showing that the abstract
+semantics simulates the concrete smeantics.
+
+control flow analysis
+
+data flow analysis
+
+predicate abstraction -- ``Construction of Abstract State Graphs with PVS'' by
+Graf. S. and Saidi 1997
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\section{summary of ``chapter 12 of Validated Designs for 
+Object-Oriented Systems''\cite{Fitzgerald2005Validated}} \label{section:vdmoo}
+\subsection{summary}
+In VDM++, concurrent systems can be modelled using \emph{threads}. Threads communicate with
+each other using shared objects. The access to such shared objects is via 
+the call of the corresponding operation of the objects. To maintain the integrity of shared
+objects, it is often necessary to ensure that concurrent access to them is synchronised.
+This can be modelled in VDM++ using permission predicates, which are predicates that 
+describe when a call to an operation may be carried out. When predicate evaluates to true,
+the operation gets carried out, otherwise it gets blocked. Such predicate consists of
+variables inside the shared objects as well as  a number of special variables. Such special
+variables provide information about the number of times each operation in the current
+shared object has been requested, activated and completed. Based on these, quite a lot synchronization
+properties can be modeled, e.g. two operations on one shared objects can only be called 
+interleavingly. The generated Java code is based on the usage of Java thread and synchronization
+primitives. It's unclear whether VDM++ can model any synchronization properties implementable by
+Java concurrency primitives.
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage 
+
+\section{Summary of ``Combining Type-Based Analysis and Model Checking for
+Finding Counterexamples against Non-Interference''\cite{Unno2006Combining}} 
+  \label{section:type_model_interference}
+
+\subsection{summary}
+Both type system and model checking can be applied to the analysis of secure information
+flow. On one hand, a well-typed program is guaranteed to have secure information flow.
+On the other hand, model checking technique can find counterexample of secure information
+flow if it exists. This paper presents a method to combine these two techniques. The type
+error information of an ill-typed program is used to guide the creation of a model, which
+is simpler than the one built directly from the original program. And it is equivalent to
+check such model for counterexample. In this manner, counterexample can often be found faster
+than a method using a model checker alone. It is unclear whether this method can be extended
+to check safety properties of concurrent / reactive system, or liveness properties of
+sequential / concurrent / reactive system.
+
+\subsection{Note}
+
+Secure information flow is a concept related to safety properties. The paper focuses on
+a special property called non-interference. The authors of the paper
+design a type system for an imperative language, which covers not only the expressions but
+also the execution of each command.
+
+If we put such concept into ATS, it would look like the following. To implement a function
+with special type, programmers choose to write the proof along certain paths. Then model
+checking technique is used to simulate all the possible executions (caused by different
+inputs) of the remaining paths to check whether there is a counterexample.
+
+ATS provides a platform for specifying and proving general safety properties via types.
+However it's not easy to specify the non-interference property, let alone prove it. 
+It seems to be another interesting topic for research.
+(Simply put, non-interference property can be viewed as that when keeping certain part
+of the inputs fixed, certain part of the outputs will always be the same.)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Summary of ``Combining Static Analysis and Model Checking for 
+Software Analysis''\cite{Brat2001Combining}} 
+  \label{section:static_analysis_model_checking}
+
+\subsection{summary}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{Summary of ``model checking exception''} 
+  \label{section:idea}
+
+
+
+
+\subsection{summary}
+xx
+
+\subsection{quote}
+todo
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``A Formal Study of Slicing for Multi-threaded Programs with JVM
+Concurrency Primitives''\cite{xxxxxxx}} 
+  \label{section:slicing_jvm}
+\subsection{summary}
+This paper gives out a formal definition of the operational semantics of the language
+CFCL. It is a language based on control-flow graphs and equiped with JVM instructions 
+for thread synchronization including wait, notify, notifyall, start, and join. This
+paper gives out the definition of correctness of slicing based on bisimulation. And it
+formalizes various kinds of dependency, and describes a process of slicing based on
+these dependencies.
+
+\subsection{quote}
+todo
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``xxxx''\cite{xxxxxxx}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+xx
+
+\subsection{quote}
+todo
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Summary of ``xxxx''\cite{xxxxxxx}} 
   \label{section:xxxxxx}
 \subsection{summary}
@@ -1499,10 +1644,13 @@ xx
 todo
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+
 
 % \bibliographystyle{apalike}
 \bibliographystyle{plain}
 \bibliography{alex_ren}
+ 
  
 \end{document}
 
