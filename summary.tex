@@ -1445,6 +1445,41 @@ A variety of dynamic constructs includes the following
 \end{enumerate}
 
 \subsection{summary}
+This paper describes an integrated collection of program analysis and transformation components, 
+called Bandera, that enables the automatic extraction of finite-state models from program 
+source code in Java for verifying properties specified by users. 
+
+Bandera allows users to formalize a property for verification as a temporal logic formula
+consisting of primitive propositions. Bandera supports the definition of propositions that
+define a range of values for object fields as well as that capture locations in the source code.
+
+Bandera applies two main techniques to the generation of tractable model for verifying a given 
+property, \emph{slicing} and \emph{abstract interpretation}. 
+
+The slicing component of Bendera
+generates the slicing criterion from the property to be verified and computes all the dependency
+in the program started from the slicing criterion. (The previous work of the authors formalizes
+different kinds of dependency including those arise due to Java's concurrency primitives.) Based
+on the knowledge of dependency in the program, Bandera then slice away program components 
+irrelevant to the property to be checked.
+
+The Abstraction-Based Specializer component allows users to examine the remaining variables 
+and fields of the sliced program to decide how the data for those components should be 
+abstracted. After that, users can select abstractions from a library and bind them to those
+variables that users deem particularly needy of compaction. The abstraction engine then 
+compiles the definitions of the abstraction into the program. The definition of the abstractions
+and operations related to them are written in Bandera Abstraction Specification Language (BASL).
+This part of the work seems similar to what we are proposing, that is to allow users to provide the
+abstraction for the datatype. In ATS we can prove the correction of operations related to
+such abstraction via type checking if the operations has no effects. This paper mentions that
+for abstractions over primitives types, Bandera generates declarations and correctness 
+proof obligations for the theorem prover PVS. (Not very clear how it works yet.) But I guess
+only part of the abstractions, provided by the Bandera library, which have predefined semantics
+have correctness proof.
+
+The Bandera backend takes the sliced and abstracted program and produces a general intermediate
+representation in a guarded command langauge (BIR), which can then be transformed into 
+verifier-specific representations for targeted verifiers, e.g. Promela for model checker SPIN.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1580,25 +1615,11 @@ Software Analysis''\cite{Brat2001Combining}}
 
 \subsection{summary}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
-
-\section{Summary of ``model checking exception''} 
-  \label{section:idea}
-
-
-
-
-\subsection{summary}
-xx
-
-\subsection{quote}
-todo
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Summary of ``A Formal Study of Slicing for Multi-threaded Programs with JVM
-Concurrency Primitives''\cite{xxxxxxx}} 
+Concurrency Primitives''\cite{Hatcliff1999Formal}} 
   \label{section:slicing_jvm}
 \subsection{summary}
 This paper gives out a formal definition of the operational semantics of the language
@@ -1611,6 +1632,7 @@ these dependencies.
 \subsection{quote}
 todo
 
+\newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Summary of ``xxxx''\cite{xxxxxxx}} 
@@ -1620,21 +1642,10 @@ xx
 
 \subsection{quote}
 todo
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Summary of ``xxxx''\cite{xxxxxxx}} 
-  \label{section:xxxxxx}
-\subsection{summary}
-xx
-
-\subsection{quote}
-todo
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \section{Summary of ``xxxx''\cite{xxxxxxx}} 
   \label{section:xxxxxx}
 \subsection{summary}
@@ -1643,9 +1654,19 @@ xx
 \subsection{quote}
 todo
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Summary of ``xxxx''\cite{xxxxxxx}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+xx
+
+\subsection{quote}
+todo
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \bibliographystyle{apalike}
 \bibliographystyle{plain}
