@@ -1635,10 +1635,36 @@ todo
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Summary of ``Recent Improvements to the McErlang Model Checker''\cite{xxxxxxx}} 
+\section{Summary of ``Recent Improvements to the McErlang Model Checker''\cite{Earle2009Recent}} 
   \label{section:improve_mcerlang}
-\subsection{summary}
-xx
+\subsection{summary} 
+The checking process in McErang is as follows. A
+monitor runs in a lock step manner with the program. Between the transition
+of two states, the monitor is given the chance to inspect the state of the
+whole program, e.g. process mailboxes, process status, node names, process
+dictionaries, etc. (All of thses can be viewed as the observable global state
+of the erlang program provided by the McErlang runtime system. The type of
+information in such global state is very rigid because these information is only
+related to a few special system operations like spawn or passing message.) However
+it's very difficult to get access to the local state of each process,
+e.g. the value of a process variable. The probe annotation provides a way
+for users to export the local state information into the monitor. When
+McErlang executes the probe statement, it records the information to the
+path of actions (if it is a probe of action), or it modifies the global
+state provided by McErlang (if it is a probe of state). (Such global state can
+be viewed as an extension of the global state mentioned above.) Also users have to
+provide corresponding functions to allow the monitor to check the occurrence
+of these probes. In the end, users have to provide the monitor to check wheter
+the execution of the program doesn't break any requirement, specified based
+on those probes. McErlang also provides a tool to automatically generate
+monitors from LTF formulae.
+
+
+In my understanding, McErang is like an interpreter, writtin in Erlang as
+well, which can run the erlang program in a special way and connect the
+running erlang program with the monitor.
+
+
 
 \subsection{quote}
 todo
@@ -1646,7 +1672,7 @@ todo
 \newpage
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Summary of ``Formal Analysis of a Space Craft Controller using SPIN''\cite{xxxxxxx}} 
+\section{Summary of ``Formal Analysis of a Space Craft Controller using SPIN''\cite{Havelund2001Formal}} 
   \label{section:spacecraft_spin}
 \subsection{summary}
 
@@ -1670,6 +1696,84 @@ is not good at all.
 Misture of code and model is useful.
 
 Currently, it's impossible to reason about everything within the system.
+
+\subsection{quote}
+todo
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``Compositional Verification for Component-based Systems and 
+  Application''\cite{Bensalem2008Compositional}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+I learned the following concepts from the paper:
+1. Component is like a 
+2. Invarance of a component
+3. What is interaction invariance
+
+\subsection{quote}
+todo
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``A Synergy Between Model-Checking and Type Inference for the
+Verification of Value-Passing Higher-Order Processes''\cite{Debbabi1999Synergy}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+I haven't finished reading the whole paper. Based on what I understand so far,
+this paper creates a programming language based on concurrent ML, a ML like
+language equiped with dynamic spawning of new processes and creation of channels.
+Both process and channel can be passed via channels like other primitive
+constructs. Due to such property of the channel, the language is called a
+Value-Passing Higher-Order Processes. The authors give out a type system for such
+language. The type of an expression contains the description of the effects caused by
+the evaluation of the expression, e.g. creating a channel, receiving a message,
+and etc. The authors then give out the concrete operational semantics of a
+concurrent program in the flavour of transition system. I didn't quite get the
+idea of the abstract operational semantics of programs given by the authors. In
+the end, the authors give out the logic that allows one to specify properties of
+expressions and the corresponding model-checking algorithm.
+
+\subsection{quote}
+todo
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``Temporal Higher-Order Contracts''\cite{Disney2011Temporal}} 
+  \label{section:HOC}
+\subsection{summary}
+xx
+
+\subsection{quote}
+todo
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``Java's Insecure Parallelism''\cite{Hansen1999Javas}} 
+  \label{section:java_insecure}
+\subsection{summary}
+The author lists two points for the weakness of Java's synchronized class, based on which 
+he also argues that \emph{Java doesn't support a monitor concept}:
+\begin{itemize}
+\item Unless they are declared as synchronized, Jva class methods are unsynchronized.
+\item Unless they are declared as private, Java class variables are public (within a
+  package)
+\end{itemize}
+
+\subsection{quote}
+todo
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Summary of ``xxxx''\cite{xxxxxxx}} 
+  \label{section:xxxxxx}
+\subsection{summary}
+xx
 
 \subsection{quote}
 todo
